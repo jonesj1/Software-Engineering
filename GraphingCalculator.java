@@ -90,13 +90,13 @@ public class GraphingCalculator extends AppCompatActivity {
             while(index<size/2)
             {
                 x = getIndex();
-                if (x + size / 2 < size)
+                if (x  < 0)
                 {
-                    canvas.drawPoint(size / 2 + x, (float) (size / 2 - function.evaluate(x + "^2")), paint);
+                    canvas.drawPoint(size / 2 + x, (float) (size / 2 + function.evaluate(x + "^2")), paint);
                     System.out.println("Thread Number+"+threadNumber+"Index:    "+x);
                 }
-                if (x + size / 2 > 0) {
-                    canvas.drawPoint(size / 2 + x, (float) (size / 2 - function.evaluate(x + "^2")), paint);
+                else {
+                    canvas.drawPoint(size / 2 + x, (float) (size / 2 -function.evaluate(x + "^2")), paint);
                     System.out.println(x);
                 }
             }
@@ -126,10 +126,10 @@ public class GraphingCalculator extends AppCompatActivity {
         {
             synchronized(lock1)
             {
-                if(index>0)
-                    index -= .001f;
-                else
+                //if(index<=0)
                     index += .001f;
+                //else
+                    //index -= 1f;
             }
         }
         public float getIndex()
