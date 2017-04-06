@@ -3,7 +3,9 @@ package com.ticetech.calculator;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
+import android.graphics.*;
+import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,8 +18,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class GraphingCalculator extends AppCompatActivity {
-
-
+    static boolean greaterThanZero = true;
+    static int size = 100;
+    final static  Bitmap bitmap = Bitmap.createBitmap(size,size, Bitmap.Config.ARGB_8888);
+    //static Canvas canvas;
+    static Paint paint;
 
     InfixToPostfix infixToPostfix = new InfixToPostfix();
     double answer;
@@ -26,7 +31,7 @@ public class GraphingCalculator extends AppCompatActivity {
     boolean expectNum = true;
     int place = 1;
     double num;
-
+    private static float index = -50;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,35 +46,101 @@ public class GraphingCalculator extends AppCompatActivity {
 
     public void setPic(View v){
         //Determines number of rows and columns needed in grid
-
-
         GridLayout gridLayout;
         gridLayout = (GridLayout)findViewById(R.id.pic1);
         gridLayout.removeAllViews();
+       /*
 
-        Bitmap bitmap = Bitmap.createBitmap(500,500, Bitmap.Config.ARGB_8888);
-        for(int i =0;i<500;++i)
-            for(int j=0;j<500;++j)
-                bitmap.setPixel(i,j, Color.RED);
+        for(int i =0;i<size;++i)
+            for(int j=0;j<size;++j)
+                bitmap.setPixel(i,j, Color.BLACK);*/
 
-        Canvas canvas = new Canvas(bitmap);
+        paint = new Paint();
+
+
+        paint.setColor(Color.RED);
+
+        GraphThread.main(4);
 
         ImageView image;
         GridLayout.LayoutParams param;
+        image = new ImageView(this);
+
+        //setContentView(drawView);
+       image.setImageBitmap(bitmap);
+       param = new GridLayout.LayoutParams();
+        param.height = gridLayout.getHeight();
+        param.width = gridLayout.getWidth();
+        image.setLayoutParams(param);
+        gridLayout.addView(image);
+
+    }
 
 
+    public static class GraphThread extends Thread
+    {
+
+        int threadNumber;
+        private Object lock1 = new Object();
+        private Object lock2 = new Object();
+
+        public void run(int threadNumber,Main function,Canvas canvas)
+        {
+            float x;
+            while(index<size/2)
+            {
+                x = getIndex();
+                if (x + size / 2 < size)
+                {
+                    canvas.drawPoint(size / 2 + x, (float) (size / 2 - function.evaluate(x + "^2")), paint);
+                    System.out.println("Thread Number+"+threadNumber+"Index:    "+x);
+                }
+                if (x + size / 2 > 0) {
+                    canvas.drawPoint(size / 2 + x, (float) (size / 2 - function.evaluate(x + "^2")), paint);
+                    System.out.println(x);
+                }
+            }
+
+        }
+
+        public GraphThread()
+        {
+
+        }
+
+        public static void main(int threadCount)
+        {
+            float amount = (float)size/(float)threadCount;
+            GraphThread[] tests = new GraphThread[threadCount];
+            for(int i=0; i<threadCount;++i)
+                tests[i] = new GraphThread();
+
+            for(int i=0; i<threadCount;++i)
+                tests[i].run(i,new Main(),new Canvas(bitmap));
 
 
-            image = new ImageView(this);
-            image.setImageBitmap(bitmap);
-            param = new GridLayout.LayoutParams();
-            param.height = bitmap.getHeight();
-            param.width = bitmap.getWidth();
-            param.setGravity(Gravity.CENTER);
-            image.setLayoutParams(param);
-            gridLayout.addView(image);
+            //tests[1].start();
+        }
 
-
+        public  void increment()
+        {
+            synchronized(lock1)
+            {
+                if(index>0)
+                    index -= .001f;
+                else
+                    index += .001f;
+            }
+        }
+        public float getIndex()
+        {
+            synchronized(lock1)
+            {
+                float i = index;
+                increment();
+                return i;
+            }
+        }
 
     }
 
