@@ -1,3 +1,9 @@
+/**
+ * This class is in charge of the Kids Calculator function on the calculator
+ * It walks the user through entering a single digit expression
+ * Upon finishing, the app displays the answer with a visual representation, then allows them to start over
+ */
+
 package com.ticetech.calculator;
 
 import android.content.Intent;
@@ -24,6 +30,7 @@ public class KidsCalculator extends AppCompatActivity {
     int place = 1;
     double num;
 
+    //Connects the interface with this .java class
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,10 +41,8 @@ public class KidsCalculator extends AppCompatActivity {
         Intent intent = getIntent();
     }
 
-
+    //When a number is clicked
     public void numbClick(View v) throws Exception {
-
-
 
         if (place == 1 || place == 3) {
 
@@ -52,6 +57,7 @@ public class KidsCalculator extends AppCompatActivity {
 
             }
 
+            //Sets the text and adds it to the expression
             switch (v.getId()) {
                 case (R.id.button0):
                     enteredText.setText("0");
@@ -96,9 +102,9 @@ public class KidsCalculator extends AppCompatActivity {
             }
 
             setPic();
-
-
             place++;
+
+            //If expression is complete, calls calculation and display
             if(place==4) {
                 calculation();
                 enteredText = (TextView) findViewById(R.id.symbol2);
@@ -108,13 +114,14 @@ public class KidsCalculator extends AppCompatActivity {
         }
     }
 
-
+    //When a symbol is clicked
     public void symClick(View v) throws Exception {
 
         if (place == 2) {
 
             TextView enteredText = (TextView) findViewById(R.id.place2);
 
+            //Sets the text and adds it to the expression
             switch (v.getId()) {
                   case (R.id.buttonMult):
                     enteredText.setText("x");
@@ -138,14 +145,13 @@ public class KidsCalculator extends AppCompatActivity {
                     break;
             }
 
-
-
             place++;
         }
 
 
     }
 
+    //Displays the picture representation of the number
     private void setPic(){
         //Determines number of rows and columns needed in grid
         double temp = Math.sqrt(num);
@@ -156,6 +162,7 @@ public class KidsCalculator extends AppCompatActivity {
         if(rows*(rows-1) >= num)
             cols--;
 
+        //Determines where to place the picture
         GridLayout gridLayout;
         if(place == 1)
             gridLayout = (GridLayout)findViewById(R.id.pic1);
@@ -168,9 +175,6 @@ public class KidsCalculator extends AppCompatActivity {
         gridLayout.setColumnCount(cols);
         gridLayout.setRowCount(rows);
 
-       // Canvas canvas;
-        //canvas = new Canvas();
-        //gridLayout.set
         ImageView image;
         GridLayout.LayoutParams param;
 
@@ -180,14 +184,13 @@ public class KidsCalculator extends AppCompatActivity {
         int c=0;
         int i=0;
 
+        //Adds pictures one at a time
         for(i=0; i<num; i++) {
             image = new ImageView(this);
             image.setImageResource(R.drawable.apple);
             param = new GridLayout.LayoutParams();
             param.height = size;
             param.width = size;
-            //param.rightMargin = 5;
-            //param.topMargin = 5;
             param.setGravity(Gravity.CENTER);
             param.columnSpec = GridLayout.spec(c);
             param.rowSpec = GridLayout.spec(r);
@@ -199,13 +202,13 @@ public class KidsCalculator extends AppCompatActivity {
                 r=0;
             if(r==0)
                 c++;
-
         }
-
     }
 
+    //When the clear button is clicked
     public void clearClick(View v) throws Exception {
 
+        //Clears the text
         place = 1;
         TextView enteredText;
         enteredText= (TextView) findViewById(R.id.place1);
@@ -226,16 +229,16 @@ public class KidsCalculator extends AppCompatActivity {
         enteredText = (TextView) findViewById(R.id.symbol2);
         enteredText.setText(" ");
 
+        //Clears the pictures
         GridLayout gridLayout = (GridLayout) findViewById(R.id.pic1);
         gridLayout.removeAllViews();
         gridLayout = (GridLayout) findViewById(R.id.pic2);
         gridLayout.removeAllViews();
         gridLayout = (GridLayout) findViewById(R.id.pic3);
         gridLayout.removeAllViews();
-
-
     }
 
+    //When it is time to find the answer
     private void calculation() throws Exception{
         TextView equal = (TextView) findViewById(R.id.place4);
         equal.setText("=");
@@ -249,10 +252,11 @@ public class KidsCalculator extends AppCompatActivity {
         text += place3.getText().toString();
         int place5 = (int)infixToPostfix.calculate(text + ' ');
 
+        //Displays answer and pictures
         num = place5;
-        setPic();
+        if(num>=0)
+            setPic();
         answer.setText(Integer.toString(place5));
-
 
         place = 1;
 

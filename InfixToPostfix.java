@@ -1,8 +1,3 @@
-/* Byron Lewandowski, Sarah Schulteis, Matt Kuraska
-* CS221
-* Project 2
-* 10/09/2015
-*/
 
 package com.ticetech.calculator;
 
@@ -13,27 +8,27 @@ import java.util.Scanner;
 public class InfixToPostfix {
 
 
-    public  InfixToPostfix(){
+	SymbolTable table = new SymbolTable();
+	Queue<Term> inputQueue;
+	Variable variableName;
+	boolean expectingOperand;
+	boolean middleOfOperand;
+	int beginning;
+	boolean isAssignment;
+	Queue<Term> outputQueue;
+	Stack<Operator> operatorStack;
+	String currentVariable;
+	Operator value;
+	Stack<Operand> postfixStack;
+	int start;
 
-        int i; //yeah idk what to put here
+
+	public  InfixToPostfix(){
+
+        int i;
     }
 
     public double calculate(String line) throws Exception {
-
-		SymbolTable table = new SymbolTable();
-		Queue<Term> inputQueue;
-		Variable variableName;
-		boolean expectingOperand;
-		boolean middleOfOperand;
-		int beginning;
-		boolean isAssignment;
-		Queue<Term> outputQueue;
-		Stack<Operator> operatorStack;
-		String currentVariable;
-		Operator value;
-		Stack<Operand> postfixStack;
-		int start;
-
 
 
 
@@ -114,7 +109,7 @@ public class InfixToPostfix {
                     return .12345;
 
 				//prints out standardized version of expression
-				System.out.print("Standardized infix: ");
+				//System.out.print("Standardized infix: ");
 				for (int i = 0; i < inputQueue.size(); i++)
 					System.out.print(inputQueue.peek(i) + " ");
 
@@ -170,7 +165,7 @@ public class InfixToPostfix {
 					if (outputQueue.peekFront().isOperand())
 						postfixStack.push((Operand) outputQueue.dequeue());
 
-                    //ELSE CAUSING ISSUES > STACK>POP
+
 					else 
 						postfixStack.push(Operator.applyOperator((Operator) outputQueue.dequeue(), postfixStack.pop(), postfixStack.pop()));
 				}
@@ -183,7 +178,7 @@ public class InfixToPostfix {
 				return(postfixStack.pop().operand);
 
 
-        //return 3;
+
 
 	}
 }

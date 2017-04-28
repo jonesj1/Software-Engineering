@@ -1,9 +1,13 @@
+/**
+ * This class is in charge of the Advanced Calculator function
+ * As buttons are pressed, their value is added to the expression
+ * Once the equal button is pressed, the value is calculated and displayed
+ */
+
 package com.ticetech.calculator;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -12,12 +16,12 @@ import android.widget.TextView;
 
 public class AdvancedCalculator extends AppCompatActivity {
 
-
     double answer;
     boolean equal = false;
     String text;
     Main calculate = new Main();
 
+    //Connects the interface with this .java class
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,18 +32,18 @@ public class AdvancedCalculator extends AppCompatActivity {
         Intent intent = getIntent();
     }
 
-
+    //When a button is clicked
     public void onClicked(View v) throws Exception {
 
         TextView enteredText = (TextView) findViewById(R.id.enteredText);
 
-        //Bugs with positive and negative error entries
         if (equal) {
             text = "";
             equal = false;
         } else
             text = enteredText.getText().toString();
 
+        //Sets the text and adds it to the expression
         switch (v.getId()) {
             case (R.id.button0):
                 enteredText.setText(text + "0");
@@ -132,6 +136,8 @@ public class AdvancedCalculator extends AppCompatActivity {
             case (R.id.pow):
                 enteredText.setText(text + "^(");
                 break;
+
+            //Calculates and displays answer
             case (R.id.buttonEqual):
                 answer = calculate.evaluate(text);
                 if (answer == .12345)
@@ -142,7 +148,4 @@ public class AdvancedCalculator extends AppCompatActivity {
                 break;
         }
     }
-
-
-
 }
