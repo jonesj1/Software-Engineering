@@ -223,7 +223,8 @@
             android:textAlignment="center"
             android:textStyle="normal|bold"
             android:textColor="@android:color/holo_red_dark"
-            android:textSize="50dp" />
+            android:textSize="50dp"
+            android:gravity="center_horizontal" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -234,7 +235,8 @@
             android:textAlignment="center"
             android:textStyle="normal|bold"
             android:textColor="@android:color/holo_red_dark"
-            android:textSize="50dp" />
+            android:textSize="50dp"
+            android:gravity="center_horizontal"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -245,7 +247,8 @@
             android:textAlignment="center"
             android:textStyle="normal|bold"
             android:textColor="@android:color/holo_red_dark"
-            android:textSize="50dp" />
+            android:textSize="50dp"
+            android:gravity="center_horizontal"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -256,7 +259,8 @@
             android:textAlignment="center"
             android:textStyle="normal|bold"
             android:textColor="@android:color/holo_red_dark"
-            android:textSize="50dp" />
+            android:textSize="50dp"
+            android:gravity="center_horizontal"/>
 
         <TextView
             android:layout_width="wrap_content"
