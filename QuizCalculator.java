@@ -153,7 +153,7 @@ public class QuizCalculator extends AppCompatActivity {
         //Does comparison  to see if correct
         else if (part == 4) {
             text2 = enteredText2.getText().toString();
-            enteredText2.setText(text2 + answer);
+            enteredText2.setText(text2 + Math.floor(answer * 100) / 100);
             if (answer == .12345)
                 enteredText.setText("Error");
             else if (answer == Double.parseDouble(text))

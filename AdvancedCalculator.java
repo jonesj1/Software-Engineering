@@ -143,7 +143,7 @@ public class AdvancedCalculator extends AppCompatActivity {
                 if (answer == .12345)
                     enteredText.setText("Error");
                 else
-                    enteredText.setText("=" + answer);
+                    enteredText.setText("=" + Math.floor(answer * 100000) / 100000);
                 equal = true;
                 break;
         }

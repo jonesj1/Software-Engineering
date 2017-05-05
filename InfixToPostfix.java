@@ -28,7 +28,7 @@ public class InfixToPostfix {
         int i;
     }
 
-    public double calculate(String line) throws Exception {
+    public double calculate(String line) {
 
 
 
@@ -44,8 +44,12 @@ public class InfixToPostfix {
 				//putting assignment of variable into symbol table
 				for (int i = 0; i < line.length(); i++) {
 					if (line.charAt(i) == '=') {
-						variableName.key = Variable.readKey(line, i);
-							if(variableName.key == null)
+						try {
+							variableName.key = Variable.readKey(line, i);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						if(variableName.key == null)
 								return '\0';
 						isAssignment = true;
 						beginning = i + 1;

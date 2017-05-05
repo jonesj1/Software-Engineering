@@ -187,7 +187,7 @@ public class CalculatorActivity extends AppCompatActivity {
                 if (answer == .12345)
                     enteredText.setText("Error");
                 else
-                    enteredText.setText("=" + answer);
+                    enteredText.setText("=" + Math.floor(answer * 100) / 100);
                 equal = true;
                 lastX = 0;
                 break;
